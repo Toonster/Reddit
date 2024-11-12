@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedditPoC.Api", "RedditPoC.Api\RedditPoC.Api.csproj", "{001110ED-A9C7-4F53-B83E-0B1DA23DE2FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedditPoC.Domain", "RedditPoC.Domain\RedditPoC.Domain.csproj", "{8E78B564-E47E-4176-AADD-1B6D9C899F8F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedditPoC.Application", "RedditPoC.Application\RedditPoC.Application.csproj", "{FFE11581-575E-404C-9326-9336F057725E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{001110ED-A9C7-4F53-B83E-0B1DA23DE2FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{001110ED-A9C7-4F53-B83E-0B1DA23DE2FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{001110ED-A9C7-4F53-B83E-0B1DA23DE2FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{001110ED-A9C7-4F53-B83E-0B1DA23DE2FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E78B564-E47E-4176-AADD-1B6D9C899F8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E78B564-E47E-4176-AADD-1B6D9C899F8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E78B564-E47E-4176-AADD-1B6D9C899F8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E78B564-E47E-4176-AADD-1B6D9C899F8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFE11581-575E-404C-9326-9336F057725E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFE11581-575E-404C-9326-9336F057725E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFE11581-575E-404C-9326-9336F057725E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFE11581-575E-404C-9326-9336F057725E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
