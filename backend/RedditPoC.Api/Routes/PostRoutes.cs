@@ -1,8 +1,10 @@
+using RedditPoC.Api.Interfaces;
+
 namespace RedditPoC.Api.Routes;
 
-public static class PostRoutes
+public class PostRoutes : IEndpointBuilder
 {
-    public static void MapPostRoutes(this IEndpointRouteBuilder builder)
+    public IEndpointRouteBuilder ConfigureEndpoints(IEndpointRouteBuilder builder)
     {
         var group = builder.MapGroup("posts")
             .WithTags("Posts");
@@ -11,7 +13,8 @@ public static class PostRoutes
 
         group.MapGet("", () => Results.Ok());
 
-        
+        return builder;
+
         #endregion
     }
 }

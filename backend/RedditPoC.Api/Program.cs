@@ -1,16 +1,15 @@
-using System.Reflection;
 using Asp.Versioning;
-using FluentValidation;
 using RedditPoC.Api.ModuleExtensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options => { options.SupportNonNullableReferenceTypes(); });
-builder.Services.AddVersioning();
-builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+builder.Services.ConfigureServices(builder);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("Custom",
+        policyBuilder => { policyBuilder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowAnyHeader(); });
+});
 
 var app = builder.Build();
 
@@ -19,21 +18,12 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    builder.Services.AddCors(options =>
-    {
-        options.AddPolicy("Custom",
-            policyBuilder =>
-            {
-                policyBuilder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowAnyHeader();
-            });
-    });
 }
 
 app.UseHttpsRedirection();
 app.MapControllers()
     .WithOpenApi();
 app.UseCors("Custom");
-app.UseExceptionHandler();
 
 var versionSet = app.NewApiVersionSet()
     .HasApiVersion(new ApiVersion(builder.Configuration.GetValue<int>("Api:Version:Major"),
@@ -41,6 +31,10 @@ var versionSet = app.NewApiVersionSet()
     .ReportApiVersions()
     .Build();
 
-var group = app.MapGroup("api/v{apiVersion:apiVersion}").WithApiVersionSet(versionSet);
+var group = app
+    .MapGroup("api/v{apiVersion:apiVersion}")
+    .WithApiVersionSet(versionSet)
+    .DisableAntiforgery()
+    .ConfigureEndpoints();
 
 app.Run();

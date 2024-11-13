@@ -13,6 +13,7 @@ public sealed class User
     {
         Id = @event.UserId;
         Username = @event.Username;
+        Email = @event.Email;
         Password = @event.Password;
     }
     
@@ -44,5 +45,6 @@ public sealed class User
 
     public Guid Id { get; private set; }
     public string Username { get; private set; }
+    public string Email { get; private set; }
     public string Password { get; private set; }
 }
