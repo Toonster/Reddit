@@ -8,17 +8,15 @@ public class UserProjection : SingleStreamProjection<User>
 {
     public User Create(UserCreated @event)
     {
-        var user = new User();
-        user.Apply(@event);
-        return user;
-    }
+        var user = new User
+        {
+            Id = @event.UserId,
+            Email = @event.Email,
+            Username = @event.Username,
+            Password = @event.Password
+        };
 
-    public void Apply(UserCreated @event, User user)
-    {
-        user.Id = @event.UserId;
-        user.Username = @event.Username;
-        user.Email = @event.Email;
-        user.Password = @event.Password;
+        return user;
     }
 
     public void Apply(UsernameUpdated @event, User user)
@@ -28,6 +26,6 @@ public class UserProjection : SingleStreamProjection<User>
 
     public void Apply(PasswordUpdated @event, User user)
     {
-        user.Password = @event.NewPassword;
+        user.Password = @event.Password;
     }
 }
