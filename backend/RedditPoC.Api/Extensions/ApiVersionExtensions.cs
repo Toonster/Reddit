@@ -1,6 +1,6 @@
 using Asp.Versioning;
 
-namespace RedditPoC.Api.ModuleExtensions;
+namespace RedditPoC.Api.Extensions;
 
 public static class ApiVersionExtensions
 {

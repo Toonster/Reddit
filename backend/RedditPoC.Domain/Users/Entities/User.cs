@@ -5,7 +5,7 @@ namespace RedditPoC.Domain.Users.Entities;
 
 public sealed class User
 {
-    private User()
+    public User()
     {
     }
 
@@ -43,8 +43,8 @@ public sealed class User
         }
     }
 
-    public Guid Id { get; private set; }
-    public string Username { get; private set; }
-    public string Email { get; private set; }
-    public string Password { get; private set; }
+    public Guid Id { get; set; }
+    public string Username { get; set; }
+    public string Email { get; set; }
+    public string Password { get; set; }
 }

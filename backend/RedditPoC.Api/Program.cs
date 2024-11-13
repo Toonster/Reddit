@@ -1,5 +1,5 @@
 using Asp.Versioning;
-using RedditPoC.Api.ModuleExtensions;
+using RedditPoC.Api.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 

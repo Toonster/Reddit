@@ -1,7 +1,7 @@
 using System.Reflection;
 using RedditPoC.Api.Interfaces;
 
-namespace RedditPoC.Api.ModuleExtensions;
+namespace RedditPoC.Api.Extensions;
 
 public static class EndpointExtensions
 {
