@@ -9,8 +9,6 @@ export default defineConfig({
       tsconfig: "./tsconfig.json",
       target: "./reddit.ts",
       client: "angular",
-      httpClient: "axios",
-      override: { mutator: { path: "./src/http/http.ts", name: "redditInstance" } },
     },
     hooks: {
       afterAllFilesWrite: "prettier --write",
