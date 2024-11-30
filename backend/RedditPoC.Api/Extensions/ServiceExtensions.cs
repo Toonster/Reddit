@@ -2,6 +2,7 @@ using System.Reflection;
 using FluentValidation;
 using Marten;
 using Marten.Events.Projections;
+using RedditPoC.Application.Posts.Projections;
 using RedditPoC.Application.Users.Projections;
 using Weasel.Core;
 
@@ -29,6 +30,7 @@ public static class ServiceExtensions
             options.UseSystemTextJsonForSerialization();
             if (builder.Environment.IsDevelopment()) options.AutoCreateSchemaObjects = AutoCreate.All;
             options.Projections.Add<UserProjection>(ProjectionLifecycle.Inline);
+            options.Projections.Add<PostProjection>(ProjectionLifecycle.Inline);
         });
         return services;
     }

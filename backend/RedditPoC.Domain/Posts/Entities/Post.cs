@@ -1,27 +1,33 @@
 using RedditPoC.Domain.Events;
 using RedditPoC.Domain.Posts.Events;
+using RedditPoC.Domain.Users.Entities;
 
 namespace RedditPoC.Domain.Posts.Entities;
 
 public sealed class Post
 {
-    public Guid Id { get; set; }
-    public string Title { get; set; } = string.Empty;
-    public string Content { get; set; } = string.Empty;
+    public Guid Id { get; private set; }
+    public Guid UserId { get; private set; }
+    public string Title { get; private set; } = string.Empty;
+    public string Content { get; private set; } = string.Empty;
+    public User Author { get; private set; } = default!;
+    
+    public Post() { }
 
     private void Apply(PostCreated @event)
     {
         Id = @event.PostId;
+        UserId = @event.UserId;
         Title = @event.Title;
         Content = @event.Content;
     }
 
-    private void Apply(TitleEdited @event)
+    private void Apply(PostTitleEdited @event)
     {
         Title = @event.Title;
     }
 
-    private void Apply(ContentEdited @event)
+    private void Apply(PostContentEdited @event)
     {
         Content = @event.Content;
     }
@@ -33,10 +39,10 @@ public sealed class Post
             case PostCreated postCreated:
                 Apply(postCreated);
                 break;
-            case TitleEdited titleEdited:
+            case PostTitleEdited titleEdited:
                 Apply(titleEdited);
                 break;
-            case ContentEdited contentEdited:
+            case PostContentEdited contentEdited:
                 Apply(contentEdited);
                 break;
         }

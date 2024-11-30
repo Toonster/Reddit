@@ -23,7 +23,6 @@ builder.Services.AddAuthentication(options =>
     .AddMicrosoftIdentityWebApi(options =>
         {
             builder.Configuration.Bind("AzureAdB2C", options);
-
             options.TokenValidationParameters.NameClaimType = "name";
         },
         options => { builder.Configuration.Bind("AzureAdB2C", options); });
@@ -31,13 +30,12 @@ builder.Services.AddAuthentication(options =>
 var app = builder.Build();
 
 
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseCors("Custom");
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
-
-app.UseSwagger();
-app.UseSwaggerUI();
 
 var versionSet = app.NewApiVersionSet()
     .HasApiVersion(new ApiVersion(builder.Configuration.GetValue<int>("Api:Version:Major"),

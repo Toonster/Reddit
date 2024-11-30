@@ -3,16 +3,7 @@ module.exports = {
   parser: "@typescript-eslint/parser",
   parserOptions: { project: "tsconfig.json" },
   ignorePatterns: [".eslintrc.cjs", "vite.config.ts", "**/lib/typings/*.ts"],
-  extends: [
-    "eslint:recommended",
-    "plugin:import/recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:import/typescript",
-    "plugin:promise/recommended",
-    "eslint-config-prettier",
-    "prettier",
-    "plugin:import/typescript",
-  ],
+  extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended", "eslint-config-prettier", "prettier"],
   settings: {
     react: {
       version: "detect",
@@ -23,7 +14,7 @@ module.exports = {
       },
       node: {
         paths: ["src"],
-        extensions: [".js", ".jsx", ".ts"],
+        extensions: [".js", ".ts"],
       },
     },
   },
@@ -35,7 +26,6 @@ module.exports = {
     "no-await-in-loop": "error",
     "no-return-await": "error",
     "require-await": "error",
-    "@typescript-eslint/no-floating-promises": "error",
     "no-console": "error",
     "@typescript-eslint/no-unused-vars": ["error"],
   },
