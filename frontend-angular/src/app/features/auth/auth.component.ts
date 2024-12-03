@@ -20,6 +20,7 @@ export class AuthComponent implements OnInit {
   ngOnInit(): void {
     this.userData$
       .pipe(
+        tap((data) => console.log(data)),
         filter(({ userData }) => !!userData.email),
         switchMap(({ userData }) =>
           this.#userService.getApiV1Users({ email: userData.email }).pipe(
