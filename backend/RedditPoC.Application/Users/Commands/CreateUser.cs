@@ -9,7 +9,7 @@ namespace RedditPoC.Application.Users.Commands;
 
 public static class CreateUser
 {
-    public sealed record Command(Guid Id, string Username, string Email, string Password)
+    public sealed record Command(Guid Id, string Username, string Email)
         : IRequest<Result>;
 
     internal sealed class Handler(IDocumentStore documentStore, IValidator<Command> validator)
@@ -28,7 +28,6 @@ public static class CreateUser
                 UserId = request.Id,
                 Username = request.Username,
                 Email = request.Email,
-                Password = request.Password,
                 CreatedOn = timestamp
             };
 
@@ -52,9 +51,9 @@ public static class CreateUser
             RuleFor(command => command.Email)
                 .EmailAddress()
                 .WithMessage("Invalid email address");
-            RuleFor(command => command.Password)
+            RuleFor(command => command.Username)
                 .NotEmpty()
-                .WithMessage("Password cannot be empty");
+                .WithMessage("Invalid email address");
         }
     }
 }

@@ -4,6 +4,11 @@ import { HomeComponent } from "./features/home/home.component";
 export const routes: Routes = [
   {
     path: "",
+    redirectTo: "home",
+    pathMatch: "full",
+  },
+  {
+    path: "home",
     title: "App Home Page",
     component: HomeComponent,
   },

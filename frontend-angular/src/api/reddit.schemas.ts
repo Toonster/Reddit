@@ -4,13 +4,35 @@
  * RedditPoC.Api
  * OpenAPI spec version: 1.0
  */
-export interface Void {
-  [key: string]: unknown;
+export type GetApiV1UsersParams = {
+  email: string;
+};
+
+export interface User {
+  displayName?: string;
+  email?: string;
+  id?: string;
+  username?: string;
+}
+
+export interface Error {
+  field?: string;
+  message?: string;
+}
+
+export interface UserResult {
+  data?: User;
+  errors?: Error[];
+  readonly isSuccess?: boolean;
+}
+
+export interface Result {
+  errors?: Error[];
+  readonly isSuccess?: boolean;
 }
 
 export interface Command {
   email?: string;
   id?: string;
-  password?: string;
   username?: string;
 }

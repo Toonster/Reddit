@@ -32,6 +32,7 @@ var app = builder.Build();
 
 app.UseSwagger();
 app.UseSwaggerUI();
+
 app.UseCors("Custom");
 app.UseHttpsRedirection();
 app.UseAuthentication();

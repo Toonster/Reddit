@@ -1,1 +1,10 @@
-<p>home works!</p>
+<div>Welcome to home!</div>
+<div *ngIf="isAuthenticated; else noAuth">
+  <button (click)="logout()" mat-flat-button>Logout</button>
+</div>
+
+<ng-template #noAuth>
+  <button (click)="login()" mat-flat-button>Login</button>
+</ng-template>
+
+<div>Is Authenticated: {{ isAuthenticated }}</div>

@@ -8,7 +8,7 @@ import { HttpClient } from "@angular/common/http";
 import type { HttpContext, HttpEvent, HttpHeaders, HttpParams, HttpResponse as AngularHttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import type { Command, Void } from "../reddit.schemas";
+import type { Command, GetApiV1UsersParams, Result, UserResult } from "../reddit.schemas";
 
 type HttpClientOptions = {
   headers?:
@@ -31,19 +31,22 @@ type HttpClientOptions = {
 @Injectable({ providedIn: "root" })
 export class UsersService {
   constructor(private http: HttpClient) {}
-  postApiV1Users<TData = Void>(command: Command, options?: Omit<HttpClientOptions, "observe"> & { observe?: "body" }): Observable<TData>;
-  postApiV1Users<TData = Void>(command: Command, options?: Omit<HttpClientOptions, "observe"> & { observe?: "response" }): Observable<AngularHttpResponse<TData>>;
-  postApiV1Users<TData = Void>(command: Command, options?: Omit<HttpClientOptions, "observe"> & { observe?: "events" }): Observable<HttpEvent<TData>>;
-  postApiV1Users<TData = Void>(command: Command, options?: HttpClientOptions): Observable<TData> {
+  postApiV1Users<TData = Result>(command: Command, options?: Omit<HttpClientOptions, "observe"> & { observe?: "body" }): Observable<TData>;
+  postApiV1Users<TData = Result>(command: Command, options?: Omit<HttpClientOptions, "observe"> & { observe?: "response" }): Observable<AngularHttpResponse<TData>>;
+  postApiV1Users<TData = Result>(command: Command, options?: Omit<HttpClientOptions, "observe"> & { observe?: "events" }): Observable<HttpEvent<TData>>;
+  postApiV1Users<TData = Result>(command: Command, options?: HttpClientOptions): Observable<TData> {
     return this.http.post<TData>(`/api/v1/users`, command, options);
   }
-  getApiV1UsersId<TData = Void>(id: string, options?: Omit<HttpClientOptions, "observe"> & { observe?: "body" }): Observable<TData>;
-  getApiV1UsersId<TData = Void>(id: string, options?: Omit<HttpClientOptions, "observe"> & { observe?: "response" }): Observable<AngularHttpResponse<TData>>;
-  getApiV1UsersId<TData = Void>(id: string, options?: Omit<HttpClientOptions, "observe"> & { observe?: "events" }): Observable<HttpEvent<TData>>;
-  getApiV1UsersId<TData = Void>(id: string, options?: HttpClientOptions): Observable<TData> {
-    return this.http.get<TData>(`/api/v1/users/${id}`, options);
+  getApiV1Users<TData = UserResult>(params: GetApiV1UsersParams, options?: Omit<HttpClientOptions, "observe"> & { observe?: "body" }): Observable<TData>;
+  getApiV1Users<TData = UserResult>(params: GetApiV1UsersParams, options?: Omit<HttpClientOptions, "observe"> & { observe?: "response" }): Observable<AngularHttpResponse<TData>>;
+  getApiV1Users<TData = UserResult>(params: GetApiV1UsersParams, options?: Omit<HttpClientOptions, "observe"> & { observe?: "events" }): Observable<HttpEvent<TData>>;
+  getApiV1Users<TData = UserResult>(params: GetApiV1UsersParams, options?: HttpClientOptions): Observable<TData> {
+    return this.http.get<TData>(`/api/v1/users`, {
+      ...options,
+      params: { ...params, ...options?.params },
+    });
   }
 }
 
-export type PostApiV1UsersClientResult = NonNullable<Void>;
-export type GetApiV1UsersIdClientResult = NonNullable<Void>;
+export type PostApiV1UsersClientResult = NonNullable<Result>;
+export type GetApiV1UsersClientResult = NonNullable<UserResult>;
