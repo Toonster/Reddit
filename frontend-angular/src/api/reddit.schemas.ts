@@ -34,5 +34,4 @@ export interface Result {
 export interface Command {
   email?: string;
   id?: string;
-  username?: string;
 }

@@ -9,10 +9,10 @@ namespace RedditPoC.Application.Users.Commands;
 
 public static class CreateUser
 {
-    public sealed record Command(Guid Id, string Username, string Email)
+    public sealed record Command(Guid Id, string Email)
         : IRequest<Result>;
 
-    internal sealed class Handler(IDocumentStore documentStore, IValidator<Command> validator)
+    internal sealed class Handler(IDocumentSession session, IValidator<Command> validator)
         : IRequestHandler<Command, Result>
     {
         public async Task<Result> Handle(Command request, CancellationToken cancellationToken)
@@ -20,13 +20,13 @@ public static class CreateUser
             var validationResult = await validator.ValidateAsync(request, cancellationToken);
             if (!validationResult.IsValid)
                 return Result.Error(validationResult.Errors.Select(err => new Error(err.PropertyName, err.ErrorMessage)));
-
-            await using var session = documentStore.LightweightSession();
+            
             var timestamp = DateTime.UtcNow;
             var userCreated = new UserCreated
             {
                 UserId = request.Id,
-                Username = request.Username,
+                Username = request.Email,
+                DisplayName = request.Email,
                 Email = request.Email,
                 CreatedOn = timestamp
             };
@@ -50,9 +50,6 @@ public static class CreateUser
                 .WithMessage("Email cannot be empty");
             RuleFor(command => command.Email)
                 .EmailAddress()
-                .WithMessage("Invalid email address");
-            RuleFor(command => command.Username)
-                .NotEmpty()
                 .WithMessage("Invalid email address");
         }
     }

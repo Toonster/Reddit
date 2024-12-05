@@ -12,8 +12,8 @@ public class UserProjection : SingleStreamProjection<User>
         return new User(@event.UserId, @event.Email, @event.Username, @event.DisplayName);
     }
 
-    public static User Apply(UsernameUpdated @event, User user)
+    public static User Apply(DisplayNameUpdated @event, User user)
     {
-        return user with { Username = @event.Username };
+        return user with { Username = @event.DisplayName };
     }
 }

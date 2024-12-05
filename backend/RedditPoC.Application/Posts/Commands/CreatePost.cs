@@ -9,7 +9,7 @@ namespace RedditPoC.Application.Posts.Commands;
 
 public static class CreatePost
 {
-    public sealed record Command(Guid Id, string Title, string Content, Guid UserId) : IRequest<Result>;
+    public sealed record Command(Guid Id, string Title, string Content, Guid UserId, Guid CommunityId) : IRequest<Result>;
 
     internal sealed class Handler(IDocumentStore store, IValidator<Command> validator)
         : IRequestHandler<Command, Result>
@@ -21,16 +21,16 @@ public static class CreatePost
                 return Result.Error(
                     validationResult.Errors.Select(err => new Error(err.PropertyName, err.ErrorMessage)));
             
-            var postId = Guid.NewGuid();
             var @event = new PostCreated
             {
-                PostId = postId,
+                PostId = request.Id,
                 UserId = request.UserId,
+                CommunityId = request.CommunityId,
                 Title = request.Title,
                 Content = request.Content
             };
             await using var session = store.LightweightSession();
-            session.Events.StartStream<Post>(postId, @event);
+            session.Events.StartStream<Post>(request.Id, @event);
             
             await session.SaveChangesAsync(cancellationToken);
             return Result.Success();
@@ -45,6 +45,7 @@ public static class CreatePost
             RuleFor(x => x.Title).NotEmpty().WithMessage("Title is required");
             RuleFor(x => x.Content).NotEmpty().WithMessage("Content is required");
             RuleFor(x => x.UserId).NotEmpty().WithMessage("User is required");
+            RuleFor(x => x.CommunityId).NotEmpty().WithMessage("Community is required");
         }
     }
 }

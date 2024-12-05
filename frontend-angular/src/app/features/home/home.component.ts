@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, Component, inject, OnInit } from "@angular/cor
 import { OidcSecurityService } from "angular-auth-oidc-client";
 import { NgIf } from "@angular/common";
 import { MatButtonModule } from "@angular/material/button";
+import { rxResource } from "@angular/core/rxjs-interop";
+import { PostsService } from "../../../api";
 
 @Component({
   selector: "app-home",
@@ -13,8 +15,10 @@ import { MatButtonModule } from "@angular/material/button";
 export class HomeComponent implements OnInit {
   isAuthenticated = false;
   readonly #securityService = inject(OidcSecurityService);
-  readonly configuration$ = this.#securityService.getConfiguration();
-  readonly userData$ = this.#securityService.getUserData();
+  readonly #postsService = inject(PostsService);
+  readonly postsResource = rxResource({
+    loader: () => this.#postsService.getApiV1Posts({}),
+  });
 
   ngOnInit(): void {
     this.#securityService.isAuthenticated$.subscribe(({ isAuthenticated }) => {
@@ -30,8 +34,4 @@ export class HomeComponent implements OnInit {
   logout(): void {
     this.#securityService.logoff();
   }
-
-  /*  readonly postsResource = rxResource({
-      loader: () => this.#securityService.getApiV1Posts(),
-    });*/
 }

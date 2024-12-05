@@ -2,3 +2,4 @@ node_modules/
 .eslintrc.cjs
 vite-env.d.ts
 src/api/
+tailwind.config.js

@@ -6,6 +6,7 @@ namespace RedditPoC.Domain.Communities.Events;
 public sealed record CommunityCreated : Event
 {
     public required Guid CommunityId { get; init; }
+    public required Guid AdminId { get; init; }
     public required string Name { get; init; }
     public required string Description { get; init; }
     public required bool IsMature { get; init; }

@@ -13,21 +13,16 @@ public sealed class User
         Id = @event.UserId;
         Username = @event.Username;
         Email = @event.Email;
+        DisplayName = @event.DisplayName;
     }
 
     public Guid Id { get; set; }
     public string Username { get; set; }
+    public string DisplayName { get; set; }
     public string Email { get; set; }
 
-    internal void Apply(UserCreated @event)
+    internal void Apply(DisplayNameUpdated @event)
     {
-        Id = @event.UserId;
-        Username = @event.Username;
-        Email = @event.Email;
-    }
-
-    internal void Apply(UsernameUpdated @event)
-    {
-        Username = @event.Username;
+        DisplayName = @event.DisplayName;
     }
 }

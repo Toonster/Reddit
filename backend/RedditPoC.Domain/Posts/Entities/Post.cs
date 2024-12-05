@@ -8,6 +8,7 @@ public sealed class Post
 {
     public Guid Id { get; private set; }
     public Guid UserId { get; private set; }
+    public Guid CommunityId { get; private set; }
     public string Title { get; private set; } = string.Empty;
     public string Content { get; private set; } = string.Empty;
     public User Author { get; private set; } = default!;
@@ -18,6 +19,7 @@ public sealed class Post
     {
         Id = @event.PostId;
         UserId = @event.UserId;
+        CommunityId = @event.CommunityId;
         Title = @event.Title;
         Content = @event.Content;
     }

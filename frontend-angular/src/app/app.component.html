@@ -1,2 +1,10 @@
+<mat-toolbar class="flex flex-col gap-2 !bg-gray-400">
+  <span>Reddit</span>
+  <button mat-flat-button routerLink="/home">Home
+  </button>
+  <button [routerLink]="['r/', '/worldnews']" mat-flat-button>Community
+  </button>
+</mat-toolbar>
 <div>This is app!</div>
+<button mat-flat-button routerLink="/home">Home</button>
 <router-outlet/>

@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from "@angular/core";
-import { UsersService } from "../../../api";
+import { Command, UsersService } from "../../../api";
 import { OidcSecurityService } from "angular-auth-oidc-client";
 import { filter, switchMap, tap } from "rxjs";
 import { AuthService } from "../../auth/services/auth.service";
@@ -13,9 +13,9 @@ import { Guid } from "guid-typescript";
 })
 export class AuthComponent implements OnInit {
   readonly #securityService = inject(OidcSecurityService);
-  userData$ = this.#securityService.userData$;
   readonly #userService = inject(UsersService);
   readonly #authService = inject(AuthService);
+  private userData$ = this.#securityService.userData$;
 
   ngOnInit(): void {
     this.userData$
@@ -41,7 +41,7 @@ export class AuthComponent implements OnInit {
   }
 
   private createUser(email: string): void {
-    const newUser = { id: Guid.create().toString(), email, username: email };
+    const newUser: Command = { id: Guid.create().toString(), email };
     this.#userService
       .postApiV1Users(newUser)
       .pipe(

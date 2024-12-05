@@ -1,6 +1,10 @@
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Web;
 using RedditPoC.Api.Interfaces;
+using RedditPoC.Application.Common;
+using RedditPoC.Application.Posts.Projections;
+using RedditPoC.Application.Posts.Queries;
 
 namespace RedditPoC.Api.Routes;
 
@@ -13,13 +17,20 @@ public class PostRoutes : IEndpointBuilder
 
         #region Queries
 
-        group.MapGet("", () => Results.Ok())
-            .Produces<int>();
+        group.MapGet("",
+                async ([FromServices] IMediator mediator, [FromQuery] string? community, [FromQuery] int? pageIndex = 1,
+                    [FromQuery] int? pageSize = 25) =>
+                {
+                    var result =
+                        await mediator.Send(new GetPosts.Query(pageIndex!.Value, pageSize!.Value, community));
+                    return Results.Ok(result);
+                })
+            .Produces<Result<IReadOnlyList<Post>>>();
 
         group.MapGet("{id:int}", ([FromRoute] int id) => Results.Ok(id))
             .Produces<int>()
             .RequireAuthorization()
-            .RequireScope(["posts.read"]);
+            .RequireScope("posts.read");
 
         return builder;
 
